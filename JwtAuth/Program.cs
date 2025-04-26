@@ -1,4 +1,6 @@
 using JwtAuth.Context;
+using JwtAuthService.Extensions;
+using JwtAuthService.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddSingleton<IPasswordHelper, PasswordHelper>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
     builder.Configuration.GetConnectionString("DefaultConnection"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
