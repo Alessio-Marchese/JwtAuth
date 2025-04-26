@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
 
-namespace JwtAuthService.Helpers;
+namespace JwtAuth.Helpers;
 
 public interface IPasswordHelper
 {
