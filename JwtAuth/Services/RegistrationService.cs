@@ -7,23 +7,23 @@ namespace JwtAuth.Services;
 
 public interface IRegistrationService
 {
-    Task Register(RegisterUserDTO dto);
+    Task RegisterAsync(RegisterUserDTO dto);
 }
 
-public class RegistrationService
+public class RegistrationService : IRegistrationService
 {
-    private readonly UserRepository _userRepository;
-    private readonly PasswordHasher<User> _passwordHasher;
+    private readonly IUserRepository _userRepository;
+    private readonly IPasswordHasher<User> _passwordHasher;
 
-    public RegistrationService(UserRepository userRepository, PasswordHasher<User> passwordHasher)
+    public RegistrationService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
     }
 
-    public async Task Register(RegisterUserDTO dto)
+    public async Task RegisterAsync(RegisterUserDTO dto)
     {
-        var user = _userRepository.GetByEmailAsync(dto.Email);
+        var user = await _userRepository.GetByEmailAsync(dto.Email);
         if (user is not null)
             return;
 
