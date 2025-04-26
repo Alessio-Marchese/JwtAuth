@@ -1,5 +1,7 @@
-﻿using JwtAuth.Models;
+﻿using JwtAuth.Context;
+using JwtAuth.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -9,7 +11,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
-        var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
+        var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
         var key = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);
 
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
@@ -32,6 +34,19 @@ public static class ServiceCollectionExtensions
                 IssuerSigningKey = new SymmetricSecurityKey(key)
             };
         });
+
+        return services;
+    }
+
+    public static IServiceCollection AddMySqlContext(this IServiceCollection services, string connectionString)
+    {
+        services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
+            connectionString,
+            ServerVersion.AutoDetect(connectionString),
+            options => options.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: System.TimeSpan.FromSeconds(10),
+                errorNumbersToAdd: null)));
 
         return services;
     }

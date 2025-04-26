@@ -9,15 +9,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
-    builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
-        options => options.EnableRetryOnFailure(
-            maxRetryCount: 5,
-            maxRetryDelay: System.TimeSpan.FromSeconds(10),
-            errorNumbersToAdd: null)));
+builder.Services.AddMySqlContext(builder.Configuration.GetConnectionString("DefaultConnection")!);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
