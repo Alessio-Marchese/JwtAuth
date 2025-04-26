@@ -1,8 +1,18 @@
+using JwtAuth.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
+    builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
+        options => options.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: System.TimeSpan.FromSeconds(10),
+            errorNumbersToAdd: null)));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
