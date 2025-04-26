@@ -23,8 +23,8 @@ namespace JwtAuth.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Role = table.Column<string>(type: "varchar(10)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PasswordHash = table.Column<byte[]>(type: "varbinary(32)", nullable: false),
-                    PasswordSalt = table.Column<byte[]>(type: "varbinary(16)", nullable: false)
+                    PasswordHash = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {

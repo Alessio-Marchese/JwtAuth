@@ -1,6 +1,7 @@
 using JwtAuth.Context;
-using JwtAuthService.Extensions;
-using JwtAuthService.Helpers;
+using JwtAuth.Extensions;
+using JwtAuth.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddSingleton<IPasswordHelper, PasswordHelper>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(
     builder.Configuration.GetConnectionString("DefaultConnection"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),

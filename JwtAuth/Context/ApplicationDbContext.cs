@@ -26,9 +26,7 @@ public class ApplicationDbContext : DbContext
                 .HasConversion<string>()
                 .HasColumnType("varchar(10)");
             entity.Property(u => u.PasswordHash)
-                .HasColumnType("varbinary(32)");
-            entity.Property(u => u.PasswordSalt)
-                .HasColumnType("varbinary(16)");
+                .HasColumnType("varchar(255)");
         });
     }
 }

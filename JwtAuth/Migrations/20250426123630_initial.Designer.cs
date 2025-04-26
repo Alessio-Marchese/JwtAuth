@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JwtAuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250426105239_initial")]
+    [Migration("20250426123630_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -35,13 +35,9 @@ namespace JwtAuth.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<byte[]>("PasswordHash")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("varbinary(32)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(16)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Role")
                         .IsRequired()
