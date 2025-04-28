@@ -1,4 +1,3 @@
-using JwtAuth.Context;
 using JwtAuth.Extensions;
 using JwtAuth.Models;
 using JwtAuth.Repositories;
@@ -16,6 +15,7 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddSingleton<IEmailValidator, EmailValidator>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

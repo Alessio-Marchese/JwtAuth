@@ -1,6 +1,6 @@
 ﻿using JwtAuth.DTO;
 using JwtAuth.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
+using JwtAuth.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JwtAuth.Controllers;
@@ -9,9 +9,11 @@ namespace JwtAuth.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IRegistrationService _registrationService;
+    private readonly ILoginService _loginService;
 
-    public UserController(IRegistrationService registrationService)
+    public UserController(IRegistrationService registrationService, ILoginService loginService)
     {
+        _loginService = loginService;
         _registrationService = registrationService;
     }
 
@@ -21,6 +23,16 @@ public class UserController : ControllerBase
         var result = await _registrationService.RegisterAsync(dto);
         if (result.IsSuccessful)
             return Ok();
+        else
+            return BadRequest(result.Reason);
+    }
+
+    [HttpPost("login")]
+    public async Task<ActionResult<string>> Login(LoginUserDTO dto)
+    {
+        var result = await _loginService.Login(dto.email, dto.password);
+        if (result.IsSuccessful)
+            return Ok(result.Data);
         else
             return BadRequest(result.Reason);
     }

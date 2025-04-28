@@ -3,7 +3,6 @@ using JwtAuth.Models;
 using JwtAuth.Repositories;
 using JwtAuth.Utilities;
 using Microsoft.AspNetCore.Identity;
-using System.Net.Mail;
 
 namespace JwtAuth.Services;
 
@@ -35,7 +34,7 @@ public class RegistrationService : IRegistrationService
         if (!_emailValidator.IsValidEmail(dto.Email))
             return new Result() { IsSuccessful = false, Reason = "The email format is invalid" };
 
-        if (user is not null)
+        if (user.IsSuccessful)
             return new Result() { IsSuccessful = false, Reason = "The email is already used"};
 
         var newUser = new User { Email = dto.Email };
