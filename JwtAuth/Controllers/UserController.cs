@@ -24,7 +24,7 @@ public class UserController : ControllerBase
         if (result.IsSuccessful)
             return Ok();
         else
-            return BadRequest(result.Reason);
+            return BadRequest(result.ErrorMessage);
     }
 
     [HttpPost("login")]
@@ -34,6 +34,6 @@ public class UserController : ControllerBase
         if (result.IsSuccessful)
             return Ok(result.Data);
         else
-            return BadRequest(result.Reason);
+            return BadRequest(result.ErrorMessage);
     }
 }

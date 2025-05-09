@@ -24,17 +24,16 @@ public class LoginService : ILoginService
     {
         var getUser = await _userRepository.GetByEmailAsync(email);
         if (!getUser.IsSuccessful)
-            return new Result<string> { IsSuccessful = false, Reason = getUser.Reason};
+            return getUser.ToResult<string>();
 
         var entryPasswordHashed = _passwordHasher.VerifyHashedPassword(getUser.Data, getUser.Data.PasswordHash, password);
 
-
         if (entryPasswordHashed == PasswordVerificationResult.SuccessRehashNeeded)
-            return new Result<string> { IsSuccessful = false, Reason = "Rehashneeded :(" };
+            return Result<string>.Failure("Rehash needed :(");
 
         if (entryPasswordHashed == PasswordVerificationResult.Success)
-            return new Result<string> { IsSuccessful = true, Data = "Logged In!" };
+            return Result<string>.Success("Logged In!");
         else
-            return new Result<string> { IsSuccessful = false, Reason = "Wrong Password :(" };
+            return Result<string>.Failure("Wrong Password :(");
     }
 }

@@ -15,27 +15,21 @@ public class RegistrationService : IRegistrationService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
-    private readonly IEmailValidator _emailValidator;
 
     public RegistrationService(
         IUserRepository userRepository,
-        IPasswordHasher<User> passwordHasher,
-        IEmailValidator emailValidator)
+        IPasswordHasher<User> passwordHasher)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
-        _emailValidator = emailValidator;
     }
 
     public async Task<Result> RegisterAsync(RegisterUserDTO dto)
     {
         var user = await _userRepository.GetByEmailAsync(dto.Email);
 
-        if (!_emailValidator.IsValidEmail(dto.Email))
-            return new Result() { IsSuccessful = false, Reason = "The email format is invalid" };
-
         if (user.IsSuccessful)
-            return new Result() { IsSuccessful = false, Reason = "The email is already used"};
+            return Result.Failure("The email is already used");
 
         var newUser = new User { Email = dto.Email };
 
@@ -43,6 +37,6 @@ public class RegistrationService : IRegistrationService
 
         await _userRepository.CreateAsync(newUser);
 
-        return new Result() { IsSuccessful = true };
+        return Result.Success();
     }
 }

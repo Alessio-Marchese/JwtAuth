@@ -24,9 +24,10 @@ public class UserRepository : IUserRepository
     public async Task<Result<User>> GetByEmailAsync(string email)
     {
         var getUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        if(getUser == null)
-            return new Result<User>() { IsSuccessful = false, Reason = "User with this email not registered"};
-        return new Result<User>() { IsSuccessful = true, Data = getUser };
+        if (getUser == null)
+            return Result<User>.Failure("User with this email not registered");
+
+        return Result<User>.Success(getUser);
     }
     public async Task CreateAsync(User user)
     {

@@ -13,7 +13,7 @@ namespace JwtAuth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20250426123630_initial")]
-    partial class initial
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
