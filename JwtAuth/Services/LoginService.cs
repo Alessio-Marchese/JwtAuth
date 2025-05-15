@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Alessio.Marchese.Utils.Core;
 using JwtAuth.Models;
 using JwtAuth.Repositories;
-using JwtAuth.Utilities;
 using Microsoft.AspNetCore.Identity;
 
 namespace JwtAuth.Services;

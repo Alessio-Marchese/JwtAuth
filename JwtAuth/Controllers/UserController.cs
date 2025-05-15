@@ -1,6 +1,5 @@
 ﻿using JwtAuth.DTO;
 using JwtAuth.Services;
-using JwtAuth.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JwtAuth.Controllers;
