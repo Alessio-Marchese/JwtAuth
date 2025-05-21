@@ -1,8 +1,6 @@
 ﻿using Alessio.Marchese.Utils.Core;
 using JwtAuth.DTO;
-using JwtAuth.Models.Entities;
-using JwtAuth.Repositories;
-using Microsoft.AspNetCore.Identity;
+using JwtAuth.Tools;
 
 namespace JwtAuth.Services;
 
@@ -13,29 +11,19 @@ public interface IRegistrationService
 
 public class RegistrationService : IRegistrationService
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IRegistrationTool _registrationTool;
 
-    public RegistrationService(
-        IUserRepository userRepository,
-        IPasswordHasher<User> passwordHasher)
+    public RegistrationService(IRegistrationTool registrationTool)
     {
-        _userRepository = userRepository;
-        _passwordHasher = passwordHasher;
+        _registrationTool = registrationTool;
     }
 
     public async Task<Result> RegisterAsync(RegisterUserDTO dto)
     {
-        var user = await _userRepository.GetByEmailAsync(dto.Email);
-
-        if (user.IsSuccessful)
+        if (_registrationTool.CheckEmailAvailability(dto.Email))
             return Result.Failure("The email is already used");
 
-        var newUser = new User { Email = dto.Email };
-
-        newUser.PasswordHash = _passwordHasher.HashPassword(newUser, dto.Password);
-
-        await _userRepository.CreateAsync(newUser);
+        await _registrationTool.RegisterAsync(dto);
 
         return Result.Success();
     }
