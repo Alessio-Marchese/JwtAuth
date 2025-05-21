@@ -1,4 +1,4 @@
-﻿using JwtAuth.Models;
+﻿using JwtAuth.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JwtAuth.Context;

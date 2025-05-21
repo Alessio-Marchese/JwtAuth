@@ -1,4 +1,5 @@
-﻿using JwtAuth.Models;
+﻿using JwtAuth.Models.Entities;
+using JwtAuth.Models.Environment;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

@@ -1,6 +1,10 @@
 ﻿using JwtAuth.Context;
-using JwtAuth.Models;
+using JwtAuth.Models.Entities;
+using JwtAuth.Models.Environment;
+using JwtAuth.Repositories;
+using JwtAuth.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -9,6 +13,14 @@ namespace JwtAuth.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection GeneralDependenciesResolver(this IServiceCollection services)
+    {
+        services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRegistrationService, RegistrationService>();
+        services.AddScoped<ILoginService, LoginService>();
+        return services;
+    }
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>()!;

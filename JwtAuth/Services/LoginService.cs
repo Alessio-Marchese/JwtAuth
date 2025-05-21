@@ -1,5 +1,5 @@
 ﻿using Alessio.Marchese.Utils.Core;
-using JwtAuth.Models;
+using JwtAuth.Models.Entities;
 using JwtAuth.Repositories;
 using Microsoft.AspNetCore.Identity;
 

@@ -1,20 +1,13 @@
 using JwtAuth.Extensions;
-using JwtAuth.Models;
-using JwtAuth.Repositories;
-using JwtAuth.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.GeneralDependenciesResolver();
 builder.Services.AddControllers();
 builder.Services.AddMySqlContext(builder.Configuration.GetConnectionString("DefaultConnection")!);
 builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IRegistrationService, RegistrationService>();
-builder.Services.AddScoped<ILoginService, LoginService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
