@@ -16,9 +16,9 @@ public class JwtService : IJwtService
 {
     private readonly JwtSettings _jwtSettings;
 
-    public JwtService(JwtSettings jwtSettings)
+    public JwtService(IConfiguration configuration)
     {
-        _jwtSettings = jwtSettings;
+        _jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
     }
 
     public string GenerateToken(Guid userId, Roles role)

@@ -20,8 +20,9 @@ public class RegistrationService : IRegistrationService
 
     public async Task<Result> RegisterAsync(RegisterUserDTO dto)
     {
-        if (_registrationTool.CheckEmailAvailability(dto.Email))
-            return Result.Failure("The email is already used");
+        var checkAvailability = await _registrationTool.CheckEmailAvailabilityAsync(dto.Email);
+        if (!checkAvailability.IsSuccessful)
+            return checkAvailability;
 
         await _registrationTool.RegisterAsync(dto);
 

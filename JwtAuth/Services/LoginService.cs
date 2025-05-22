@@ -14,10 +14,12 @@ public class LoginService : ILoginService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
-    public LoginService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
+    private readonly IJwtService _jwtService;
+    public LoginService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, IJwtService jtwService)
     {
         _passwordHasher = passwordHasher;
         _userRepository = userRepository;
+        _jwtService = jtwService;
     }
     public async Task<Result<string>> Login(string email, string password)
     {
@@ -31,7 +33,10 @@ public class LoginService : ILoginService
             return Result<string>.Failure("Rehash needed :(");
 
         if (entryPasswordHashed == PasswordVerificationResult.Success)
-            return Result<string>.Success("Logged In!");
+        {
+            var token = _jwtService.GenerateToken(getUser.Data.Id, getUser.Data.Role);
+            return Result<string>.Success(token);
+        }
         else
             return Result<string>.Failure("Wrong Password :(");
     }
