@@ -1,10 +1,10 @@
 ﻿using Alessio.Marchese.Utils.Core;
-using JwtAuth.DTO;
-using JwtAuth.Models.Entities;
-using JwtAuth.Repositories;
+using JwtAuth.Application.DTO;
+using JwtAuth.Domain.Models.Entities;
+using JwtAuth.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 
-namespace JwtAuth.Tools;
+namespace JwtAuth.Application.Tools;
 
 public interface IRegistrationTool
 {

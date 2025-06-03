@@ -1,9 +1,9 @@
-﻿using JwtAuth.Context;
-using JwtAuth.Models.Entities;
-using JwtAuth.Models.Environment;
-using JwtAuth.Repositories;
-using JwtAuth.Services;
-using JwtAuth.Tools;
+﻿using JwtAuth.Application.Services;
+using JwtAuth.Application.Tools;
+using JwtAuth.Domain.Models.Entities;
+using JwtAuth.Domain.Models.Environment;
+using JwtAuth.Infrastructure.Context;
+using JwtAuth.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-namespace JwtAuth.Extensions;
+namespace JwtAuth.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -101,7 +101,7 @@ public static class ServiceCollectionExtensions
             ServerVersion.AutoDetect(connectionString),
             options => options.EnableRetryOnFailure(
                 maxRetryCount: 5,
-                maxRetryDelay: System.TimeSpan.FromSeconds(10),
+                maxRetryDelay: TimeSpan.FromSeconds(10),
                 errorNumbersToAdd: null)));
 
         return services;

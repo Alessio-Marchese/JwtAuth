@@ -1,11 +1,11 @@
-﻿using JwtAuth.Models.Entities;
-using JwtAuth.Models.Environment;
+﻿using JwtAuth.Domain.Models.Entities;
+using JwtAuth.Domain.Models.Environment;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace JwtAuth.Services;
+namespace JwtAuth.Application.Services;
 
 public interface IJwtService
 {

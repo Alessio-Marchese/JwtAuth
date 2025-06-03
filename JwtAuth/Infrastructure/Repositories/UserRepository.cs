@@ -1,9 +1,9 @@
 ﻿using Alessio.Marchese.Utils.Core;
-using JwtAuth.Context;
-using JwtAuth.Models.Entities;
+using JwtAuth.Domain.Models.Entities;
+using JwtAuth.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace JwtAuth.Repositories;
+namespace JwtAuth.Infrastructure.Repositories;
 
 
 public interface IUserRepository

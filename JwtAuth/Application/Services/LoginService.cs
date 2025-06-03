@@ -1,9 +1,9 @@
 ﻿using Alessio.Marchese.Utils.Core;
-using JwtAuth.Models.Entities;
-using JwtAuth.Repositories;
+using JwtAuth.Domain.Models.Entities;
+using JwtAuth.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 
-namespace JwtAuth.Services;
+namespace JwtAuth.Application.Services;
 
 public interface ILoginService
 {

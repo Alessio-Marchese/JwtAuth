@@ -1,5 +1,5 @@
-﻿using JwtAuth.DTO;
-using JwtAuth.Services;
+﻿using JwtAuth.Application.DTO;
+using JwtAuth.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +10,13 @@ public class UserController : ControllerBase
 {
     private readonly IRegistrationService _registrationService;
     private readonly ILoginService _loginService;
+    private readonly IJwtService _jwtService;
 
-    public UserController(IRegistrationService registrationService, ILoginService loginService)
+    public UserController(IRegistrationService registrationService, ILoginService loginService, IJwtService jwtService)
     {
         _loginService = loginService;
         _registrationService = registrationService;
+        _jwtService = jwtService;
     }
 
     [HttpPost("register")]
@@ -36,4 +38,8 @@ public class UserController : ControllerBase
         else
             return BadRequest(result.ErrorMessage);
     }
+
+    [HttpGet("validate")]
+    public ActionResult<bool> Validate(string token)
+     => _jwtService.ValidateToken(token);
 }

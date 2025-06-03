@@ -1,4 +1,4 @@
-﻿namespace JwtAuth.DTO;
+﻿namespace JwtAuth.Application.DTO;
 
 public class RegisterUserDTO
 {

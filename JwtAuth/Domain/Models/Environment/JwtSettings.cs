@@ -1,4 +1,4 @@
-﻿namespace JwtAuth.Models.Environment;
+﻿namespace JwtAuth.Domain.Models.Environment;
 
 public class JwtSettings
 {

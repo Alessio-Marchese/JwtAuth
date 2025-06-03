@@ -1,8 +1,8 @@
 ﻿using Alessio.Marchese.Utils.Core;
-using JwtAuth.DTO;
-using JwtAuth.Tools;
+using JwtAuth.Application.DTO;
+using JwtAuth.Application.Tools;
 
-namespace JwtAuth.Services;
+namespace JwtAuth.Application.Services;
 
 public interface IRegistrationService
 {

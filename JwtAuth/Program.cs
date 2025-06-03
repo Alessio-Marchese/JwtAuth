@@ -1,4 +1,4 @@
-using JwtAuth.Extensions;
+using JwtAuth.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,4 @@
-﻿namespace JwtAuth.Models.Entities;
+﻿namespace JwtAuth.Domain.Models.Entities;
 
 public enum Roles
 {
