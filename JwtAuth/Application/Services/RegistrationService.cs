@@ -22,7 +22,7 @@ public class RegistrationService : IRegistrationService
     {
         var checkAvailability = await _registrationTool.CheckEmailAvailabilityAsync(dto.Email);
         if (!checkAvailability.IsSuccessful)
-            return checkAvailability;
+            return checkAvailability.ToResult();
 
         await _registrationTool.RegisterAsync(dto);
 

@@ -1,5 +1,6 @@
 ﻿using Alessio.Marchese.Utils.Core;
 using JwtAuth.Application.DTO;
+using JwtAuth.Common.Costants;
 using JwtAuth.Domain.Models.Entities;
 using JwtAuth.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -29,7 +30,7 @@ public class RegistrationTool : IRegistrationTool
     {
         var getUser = await _userRepository.GetByEmailAsync(email);
         if (getUser.IsSuccessful)
-            return Result.Failure("Email not available");
+            return Result.Failure(ErrorMessages.EmailAlreadyUsed);
 
         return Result.Success();
     }

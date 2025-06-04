@@ -32,7 +32,7 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<string>> Login(LoginUserDTO dto)
     {
-        var result = await _loginService.Login(dto.email, dto.password);
+        var result = await _loginService.LoginAsync(dto.email, dto.password);
         if (result.IsSuccessful)
             return Ok(result.Data);
         else

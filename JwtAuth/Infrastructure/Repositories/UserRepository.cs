@@ -1,4 +1,5 @@
 ﻿using Alessio.Marchese.Utils.Core;
+using JwtAuth.Common.Costants;
 using JwtAuth.Domain.Models.Entities;
 using JwtAuth.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ public class UserRepository : IUserRepository
     {
         var getUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         if (getUser == null)
-            return Result<User>.Failure("User with this email not registered");
+            return Result<User>.Failure(ErrorMessages.UserNotFound);
 
         return Result<User>.Success(getUser);
     }

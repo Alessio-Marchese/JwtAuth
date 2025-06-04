@@ -1,4 +1,5 @@
 ﻿using Alessio.Marchese.Utils.Core;
+using JwtAuth.Common.Costants;
 using JwtAuth.Domain.Models.Entities;
 using JwtAuth.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +8,7 @@ namespace JwtAuth.Application.Services;
 
 public interface ILoginService
 {
-    Task<Result<string>> Login(string email, string password);
+    Task<Result<string>> LoginAsync(string email, string password);
 }
 
 public class LoginService : ILoginService
@@ -21,7 +22,7 @@ public class LoginService : ILoginService
         _userRepository = userRepository;
         _jwtService = jtwService;
     }
-    public async Task<Result<string>> Login(string email, string password)
+    public async Task<Result<string>> LoginAsync(string email, string password)
     {
         var getUser = await _userRepository.GetByEmailAsync(email);
         if (!getUser.IsSuccessful)
@@ -30,7 +31,7 @@ public class LoginService : ILoginService
         var entryPasswordHashed = _passwordHasher.VerifyHashedPassword(getUser.Data, getUser.Data.PasswordHash, password);
 
         if (entryPasswordHashed == PasswordVerificationResult.SuccessRehashNeeded)
-            return Result<string>.Failure("Rehash needed :(");
+            return Result<string>.Failure(ErrorMessages.RehashRequired);
 
         if (entryPasswordHashed == PasswordVerificationResult.Success)
         {
@@ -38,6 +39,6 @@ public class LoginService : ILoginService
             return Result<string>.Success(token);
         }
         else
-            return Result<string>.Failure("Wrong Password :(");
+            return Result<string>.Failure(ErrorMessages.WrongPassword);
     }
 }
